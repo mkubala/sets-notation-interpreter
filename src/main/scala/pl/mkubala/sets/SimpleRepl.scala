@@ -1,6 +1,7 @@
 package pl.mkubala.sets
 
 import scala.annotation.tailrec
+import scala.tools.jline.console.ConsoleReader
 
 import pl.mkubala.sets.evaluator.BasicSetOperations
 import pl.mkubala.sets.evaluator.SetNotationEvaluator
@@ -9,17 +10,18 @@ import pl.mkubala.sets.parser.SetNotationParser
 object SimpleRepl extends App {
 
   val evaluator = new SetNotationEvaluator with BasicSetOperations
+  val reader = new ConsoleReader()
+  reader.setPrompt("> ")
 
   @tailrec
   def readInput() {
-    print("> ");
-    readLine() match {
-      case "quit" | "exit" | "bye" => println("bye!")
+   reader.readLine match {
+      case "quit" | "exit" | "bye" => reader.println("bye!")
       case expr => {
         try {
-          println("= " + evaluator.eval(SetNotationParser.parse(expr)))
+          reader.println("= " + evaluator.eval(SetNotationParser.parse(expr)))
         } catch {
-          case ex: Exception => println("Error: " + ex.getMessage)
+          case ex: Exception => reader.println("Error: " + ex.getMessage)
         }
         readInput
       }

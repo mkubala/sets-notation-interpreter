@@ -10,7 +10,7 @@ class SetNotationEvaluator {
 
   private val operations = scala.collection.mutable.Map[String, SetOperation]()
 
-  protected def addOperation(symbol: String, operation: SetOperation) =
+  def addOperation(symbol: String, operation: SetOperation) =
     if (operations contains symbol)
       throw new IllegalStateException("Detected collision fo op symbol: '" + symbol + "'")
     else
